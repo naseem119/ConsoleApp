@@ -1,4 +1,3 @@
 print('hello')
 print('hello')
-print('hello')
-some textssdasd
+print('aslidnasd')
