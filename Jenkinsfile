@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    environment {
+    environment {sad
         PATH = "${env.PATH};${env.USERPROFILE}\\.dotnet\\tools"
     }
 
