@@ -12,7 +12,7 @@ pipeline {
     environment {
         // **UPDATED**: This now points to the downloaded .exe validator tool.
         // Ensure you have downloaded 'cyclonedx-win-x64.exe' and renamed it to 'cyclonedx-cli.exe' in this location.
-        CYCLONEDX_CLI_PATH = 'C:\\tools\\cyclonedx-cli.exe'
+        CYCLONEDX_CLI_PATH = 'C:\\tools\\cyclonedx-win-x64.exe'
 
         // Define the name for the generated SBOM file.
         SBOM_NAME = 'sbom.json'
