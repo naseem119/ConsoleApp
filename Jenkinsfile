@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     environment {
-        // This is still needed to ensure the installed tool is found
+        // This line is correct and necessary. It ensures the path where
+        // the tool gets installed is searchable.
         PATH = "${env.PATH};${env.USERPROFILE}\\.dotnet\\tools"
     }
 
@@ -19,18 +20,21 @@ pipeline {
             }
         }
 
-        // *** NEW STAGE TO INSTALL THE TOOL ***
+        // *** ADD THIS NEW STAGE ***
         stage('Install CycloneDX Tool') {
             steps {
-                // Installs the CycloneDX .NET tool.
-                // Using 'update' is safer as 'install' will fail if it's already installed.
-                // Or use 'install' and ignore the exit code if it's already there.
+                // This command installs the necessary tool. It will fail if the tool
+                // is already installed, which is okay for a clean workspace.
+                // For more robust pipelines, one might use a more complex script
+                // to check for existence first, but this is the essential command.
                 bat 'dotnet tool install --global CycloneDX.DotNet'
             }
         }
 
         stage('Generate SBOM') {
             steps {
+                // This command will now succeed because the tool was installed
+                // in the previous stage.
                 bat 'dotnet cyclonedx -p ConsoleApp/ConsoleApp.csproj -o sbom.json'
             }
         }
@@ -51,7 +55,7 @@ pipeline {
 
     post {
         always {
-            // This will now archive the sbom.json file upon successful generation
+            // This will now successfully archive the sbom.json file.
             archiveArtifacts artifacts: 'sbom.json', fingerprint: true
         }
     }
