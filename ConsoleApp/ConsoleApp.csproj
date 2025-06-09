@@ -7,4 +7,11 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Azure.Core" Version="1.46.1" />
+      <PackageReference Include="Azure.Identity" Version="1.14.0" />
+      <PackageReference Include="Azure.Security.KeyVault.Keys" Version="4.8.0-beta.1" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+
 </Project>

@@ -1,0 +1,290 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "ConsoleApp/1.0.0": {
+        "dependencies": {
+          "Azure.Core": "1.46.1",
+          "Azure.Identity": "1.14.0",
+          "Azure.Security.KeyVault.Keys": "4.8.0-beta.1",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "runtime": {
+          "ConsoleApp.dll": {}
+        }
+      },
+      "Azure.Core/1.46.1": {
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "8.0.0",
+          "System.ClientModel": "1.4.1",
+          "System.Memory.Data": "6.0.1"
+        },
+        "runtime": {
+          "lib/net8.0/Azure.Core.dll": {
+            "assemblyVersion": "1.46.1.0",
+            "fileVersion": "1.4600.125.25909"
+          }
+        }
+      },
+      "Azure.Identity/1.14.0": {
+        "dependencies": {
+          "Azure.Core": "1.46.1",
+          "Microsoft.Identity.Client": "4.71.1",
+          "Microsoft.Identity.Client.Extensions.Msal": "4.71.1",
+          "System.Memory": "4.5.5"
+        },
+        "runtime": {
+          "lib/net8.0/Azure.Identity.dll": {
+            "assemblyVersion": "1.14.0.0",
+            "fileVersion": "1.1400.25.26304"
+          }
+        }
+      },
+      "Azure.Security.KeyVault.Keys/4.8.0-beta.1": {
+        "dependencies": {
+          "Azure.Core": "1.46.1"
+        },
+        "runtime": {
+          "lib/net8.0/Azure.Security.KeyVault.Keys.dll": {
+            "assemblyVersion": "4.8.0.0",
+            "fileVersion": "4.800.25.20802"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/8.0.0": {
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.23.53103"
+          }
+        }
+      },
+      "Microsoft.Extensions.DependencyInjection.Abstractions/8.0.2": {
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1024.46610"
+          }
+        }
+      },
+      "Microsoft.Extensions.Logging.Abstractions/8.0.3": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1325.6609"
+          }
+        }
+      },
+      "Microsoft.Identity.Client/4.71.1": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Abstractions": "6.35.0",
+          "System.Diagnostics.DiagnosticSource": "6.0.1"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Identity.Client.dll": {
+            "assemblyVersion": "4.71.1.0",
+            "fileVersion": "4.71.1.0"
+          }
+        }
+      },
+      "Microsoft.Identity.Client.Extensions.Msal/4.71.1": {
+        "dependencies": {
+          "Microsoft.Identity.Client": "4.71.1",
+          "System.Security.Cryptography.ProtectedData": "4.5.0"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Identity.Client.Extensions.Msal.dll": {
+            "assemblyVersion": "4.71.1.0",
+            "fileVersion": "4.71.1.0"
+          }
+        }
+      },
+      "Microsoft.IdentityModel.Abstractions/6.35.0": {
+        "runtime": {
+          "lib/net6.0/Microsoft.IdentityModel.Abstractions.dll": {
+            "assemblyVersion": "6.35.0.0",
+            "fileVersion": "6.35.0.41201"
+          }
+        }
+      },
+      "Newtonsoft.Json/13.0.3": {
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.0.3.27908"
+          }
+        }
+      },
+      "System.ClientModel/1.4.1": {
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.3",
+          "System.Memory.Data": "6.0.1"
+        },
+        "runtime": {
+          "lib/net8.0/System.ClientModel.dll": {
+            "assemblyVersion": "1.4.1.0",
+            "fileVersion": "1.400.125.25905"
+          }
+        }
+      },
+      "System.Diagnostics.DiagnosticSource/6.0.1": {
+        "dependencies": {
+          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
+        }
+      },
+      "System.Memory/4.5.5": {},
+      "System.Memory.Data/6.0.1": {
+        "runtime": {
+          "lib/net6.0/System.Memory.Data.dll": {
+            "assemblyVersion": "6.0.0.1",
+            "fileVersion": "6.0.3624.51421"
+          }
+        }
+      },
+      "System.Runtime.CompilerServices.Unsafe/6.0.0": {},
+      "System.Security.Cryptography.ProtectedData/4.5.0": {
+        "runtime": {
+          "lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll": {
+            "assemblyVersion": "4.0.3.0",
+            "fileVersion": "4.6.26515.6"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "4.0.3.0",
+            "fileVersion": "4.6.26515.6"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ConsoleApp/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Azure.Core/1.46.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-iE5DPOlGsN5kCkF4gN+vasN1RihO0Ypie92oQ5tohQYiokmnrrhLnee+3zcE8n7vB6ZAzhPTfUGAEXX/qHGkYA==",
+      "path": "azure.core/1.46.1",
+      "hashPath": "azure.core.1.46.1.nupkg.sha512"
+    },
+    "Azure.Identity/1.14.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xQ6mpNhifb8W/KG2BclhbJWAupvE3JF8lPEBF8t59Q5sc1yN0Ci+dvS0qXtc6m9auxwYpmc8rhOmK541dcGwmA==",
+      "path": "azure.identity/1.14.0",
+      "hashPath": "azure.identity.1.14.0.nupkg.sha512"
+    },
+    "Azure.Security.KeyVault.Keys/4.8.0-beta.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-D8Z0FUtkD6qmc56+i82sHedcSQBsXSbqHPfxXnKqWvj32T1bqJfIogrquku7KwjKj7/wKCEwEhAGrBiUsUeHaQ==",
+      "path": "azure.security.keyvault.keys/4.8.0-beta.1",
+      "hashPath": "azure.security.keyvault.keys.4.8.0-beta.1.nupkg.sha512"
+    },
+    "Microsoft.Bcl.AsyncInterfaces/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3WA9q9yVqJp222P3x1wYIGDAkpjAku0TMUaaQV22g6L67AI0LdOIrVS7Ht2vJfLHGSPVuqN94vIr15qn+HEkHw==",
+      "path": "microsoft.bcl.asyncinterfaces/8.0.0",
+      "hashPath": "microsoft.bcl.asyncinterfaces.8.0.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.DependencyInjection.Abstractions/8.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3iE7UF7MQkCv1cxzCahz+Y/guQbTqieyxyaWKhrRO91itI9cOKO76OHeQDahqG4MmW5umr3CcCvGmK92lWNlbg==",
+      "path": "microsoft.extensions.dependencyinjection.abstractions/8.0.2",
+      "hashPath": "microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Logging.Abstractions/8.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-dL0QGToTxggRLMYY4ZYX5AMwBb+byQBd/5dMiZE07Nv73o6I5Are3C7eQTh7K2+A4ct0PVISSr7TZANbiNb2yQ==",
+      "path": "microsoft.extensions.logging.abstractions/8.0.3",
+      "hashPath": "microsoft.extensions.logging.abstractions.8.0.3.nupkg.sha512"
+    },
+    "Microsoft.Identity.Client/4.71.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-SgvSBcMRvmEEyV10pcvxNVUbwYoShmj/9pxXFVr3AFjE26IUzuwYLtLgt58xkEnT0xJBjfObaXxcol3BMtmEAg==",
+      "path": "microsoft.identity.client/4.71.1",
+      "hashPath": "microsoft.identity.client.4.71.1.nupkg.sha512"
+    },
+    "Microsoft.Identity.Client.Extensions.Msal/4.71.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PGOHaoQhKBKnXy1kfW+Gu9/rxStKsqR+UZKeVv4XAsATdzmfj9y9kkUOftIjVFvxP3oh2Sk7v65ylS0K/qYADA==",
+      "path": "microsoft.identity.client.extensions.msal/4.71.1",
+      "hashPath": "microsoft.identity.client.extensions.msal.4.71.1.nupkg.sha512"
+    },
+    "Microsoft.IdentityModel.Abstractions/6.35.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xuR8E4Rd96M41CnUSCiOJ2DBh+z+zQSmyrYHdYhD6K4fXBcQGVnRCFQ0efROUYpP+p0zC1BLKr0JRpVuujTZSg==",
+      "path": "microsoft.identitymodel.abstractions/6.35.0",
+      "hashPath": "microsoft.identitymodel.abstractions.6.35.0.nupkg.sha512"
+    },
+    "Newtonsoft.Json/13.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ==",
+      "path": "newtonsoft.json/13.0.3",
+      "hashPath": "newtonsoft.json.13.0.3.nupkg.sha512"
+    },
+    "System.ClientModel/1.4.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-MY7eFGKp+Hu7Ciub8wigQ0odGrkml4eTjUy8d5Bu2eGAVvm8Qskkq+YuXiiS5wMJGq7iSvqseV4skd5WxTUdDA==",
+      "path": "system.clientmodel/1.4.1",
+      "hashPath": "system.clientmodel.1.4.1.nupkg.sha512"
+    },
+    "System.Diagnostics.DiagnosticSource/6.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-KiLYDu2k2J82Q9BJpWiuQqCkFjRBWVq4jDzKKWawVi9KWzyD0XG3cmfX0vqTQlL14Wi9EufJrbL0+KCLTbqWiQ==",
+      "path": "system.diagnostics.diagnosticsource/6.0.1",
+      "hashPath": "system.diagnostics.diagnosticsource.6.0.1.nupkg.sha512"
+    },
+    "System.Memory/4.5.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XIWiDvKPXaTveaB7HVganDlOCRoj03l+jrwNvcge/t8vhGYKvqV+dMv6G4SAX2NoNmN0wZfVPTAlFwZcZvVOUw==",
+      "path": "system.memory/4.5.5",
+      "hashPath": "system.memory.4.5.5.nupkg.sha512"
+    },
+    "System.Memory.Data/6.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yliDgLh9S9Mcy5hBIdZmX6yphYIW3NH+3HN1kV1m7V1e0s7LNTw/tHNjJP4U9nSMEgl3w1TzYv/KA1Tg9NYy6w==",
+      "path": "system.memory.data/6.0.1",
+      "hashPath": "system.memory.data.6.0.1.nupkg.sha512"
+    },
+    "System.Runtime.CompilerServices.Unsafe/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/iUeP3tq1S0XdNNoMz5C9twLSrM/TH+qElHkXWaPvuNOt+99G75NrV0OS2EqHx5wMN7popYjpc8oTjC1y16DLg==",
+      "path": "system.runtime.compilerservices.unsafe/6.0.0",
+      "hashPath": "system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+    },
+    "System.Security.Cryptography.ProtectedData/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wLBKzFnDCxP12VL9ANydSYhk59fC4cvOr9ypYQLPnAj48NQIhqnjdD2yhP8yEKyBJEjERWS9DisKL7rX5eU25Q==",
+      "path": "system.security.cryptography.protecteddata/4.5.0",
+      "hashPath": "system.security.cryptography.protecteddata.4.5.0.nupkg.sha512"
+    }
+  }
+}
+// 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
