@@ -1,3 +1,12 @@
+/**
+ * Jenkinsfile for generating and validating a CycloneDX SBOM for a .NET project.
+ *
+ * Prerequisites on the Windows Jenkins agent:
+ * 1. .NET SDK (for the 'dotnet' command)
+ * 2. CycloneDX .NET Tool (install with: dotnet tool install --global CycloneDX)
+ * 3. Java Runtime Environment (for running the validator .jar)
+ * 4. CycloneDX CLI .jar file downloaded and placed in a known location.
+ */
 pipeline {
     agent any
 
@@ -13,21 +22,19 @@ pipeline {
         stage('Build Project') {
             steps {
                 echo 'Building the .NET project to ensure it is valid...'
-                // Use 'bat' for Windows batch commands.
-                // This command finds the .sln file in the current directory and builds it.
-                bat 'dotnet build'
+                // Explicitly target the project file inside the ConsoleApp directory.
+                bat 'dotnet build ConsoleApp/ConsoleApp.csproj'
             }
         }
 
         stage('Generate CycloneDX SBOM') {
             steps {
                 echo "Generating CycloneDX SBOM (${env.SBOM_NAME})..."
-                // **CORRECTED COMMAND**: The official tool command is 'dotnet-cyclonedx'.
-                // This command scans the project and generates the SBOM.
-                // '.'          - Scan the current directory for a .sln or .csproj file.
-                // '-o .'       - Output the SBOM file to the current directory.
-                // '--json'     - Specifies the output format should be JSON.
-                bat "dotnet-cyclonedx . -o . --json"
+                // Use the correct 'dotnet-cyclonedx' command.
+                // -p: Point directly to the project file.
+                // -o: Specify the output directory ('.' means the current workspace root).
+                // --json: Specify JSON format.
+                bat "dotnet-cyclonedx -p ConsoleApp/ConsoleApp.csproj -o . --json"
 
                 // We rename the default output 'bom.json' to our desired name.
                 // The tool by default might name it bom.json, so this step ensures consistency.
