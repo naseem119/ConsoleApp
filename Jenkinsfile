@@ -12,10 +12,15 @@ pipeline {
 
     environment {
         // IMPORTANT: Update this path to the location of your cyclonedx-cli.jar file.
-        CYCLONEDX_CLI_PATH = "C:\\Users\\HP User\\.dotnet\\tools\\dotnet-CycloneDX.exe"
+        CYCLONEDX_CLI_PATH = 'C:\\tools\\cyclonedx-cli-2.8.0.jar'
 
         // Define the name for the generated SBOM file.
         SBOM_NAME = 'sbom.json'
+
+        // **CRITICAL FIX**: Define the full, absolute path to the dotnet-cyclonedx executable.
+        // You MUST find this path on your machine by running 'where dotnet-cyclonedx' in a command prompt
+        // and replace the example path below with your actual path.
+        CYCLONEDX_TOOL_PATH = 'C:\\Users\\HP User\\.dotnet\\tools\\dotnet-cyclonedx.exe'
     }
 
     stages {
@@ -30,11 +35,9 @@ pipeline {
         stage('Generate CycloneDX SBOM') {
             steps {
                 echo "Generating CycloneDX SBOM (${env.SBOM_NAME})..."
-                // Use the correct 'dotnet-cyclonedx' command.
-                // -p: Point directly to the project file.
-                // -o: Specify the output directory ('.' means the current workspace root).
-                // --json: Specify JSON format.
-                bat "dotnet-cyclonedx -p ConsoleApp/ConsoleApp.csproj -o . --json"
+                
+                // **FIX**: Removed the incorrect '-p' flag. The path is now the main argument.
+                bat "\"${env.CYCLONEDX_TOOL_PATH}\" ConsoleApp/ConsoleApp.csproj -o . --json"
 
                 // We rename the default output 'bom.json' to our desired name.
                 // The tool by default might name it bom.json, so this step ensures consistency.
