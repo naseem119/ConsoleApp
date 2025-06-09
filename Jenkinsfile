@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        PATH = "${env.PATH};${env.USERPROFILE}\\.dotnet\\tools"
+        PATH = "C:\\Windows\\System32\\config\\systemprofile\\.dotnet\\tools"
     }
 
     stages {
