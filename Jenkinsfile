@@ -20,7 +20,7 @@ pipeline {
 
         stage('Generate SBOM') {
             steps {
-                bat 'cyclonedx dotnet -p ConsoleApp/ConsoleApp.csproj -o sbom.json'
+                bat 'dotnet CycloneDX -p ConsoleApp/ConsoleApp.csproj -o sbom.json'
             }
         }
 
