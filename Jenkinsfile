@@ -12,7 +12,7 @@ pipeline {
     environment {
         // **UPDATED**: This now points to the downloaded .exe validator tool.
         // Ensure you have downloaded 'cyclonedx-win-x64.exe' and renamed it to 'cyclonedx-cli.exe' in this location.
-        CYCLONEDX_CLI_PATH = 'C:\\tools\\cyclonedx-win-x64.exe'
+        CYCLONEDX_CLI_PATH = 'C:\\tools\\cyclonedx-cli.exe'
 
         // Define the name for the generated SBOM file.
         SBOM_NAME = 'sbom.json'
@@ -37,6 +37,9 @@ pipeline {
                 
                 // Call the generator tool using its full, absolute path.
                 bat "\"${env.CYCLONEDX_TOOL_PATH}\" ConsoleApp/ConsoleApp.csproj -o . --json"
+
+                // **FIX**: Clean up old SBOM before renaming to prevent conflicts.
+                bat "if exist ${env.SBOM_NAME} ( del ${env.SBOM_NAME} )"
 
                 // Rename the default output 'bom.json' to our desired name.
                 bat "if exist bom.json ( ren bom.json ${env.SBOM_NAME} )"
