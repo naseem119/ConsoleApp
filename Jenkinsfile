@@ -8,19 +8,19 @@ pipeline {
     stages {
         stage('Restore') {
             steps {
-                bat 'dotnet restore DemoApp/DemoApp.csproj'
+                bat 'dotnet restore ConsoleApp/ConsoleApp.csproj'
             }
         }
 
         stage('Build') {
             steps {
-                bat 'dotnet build DemoApp/DemoApp.csproj --no-restore'
+                bat 'dotnet build ConsoleApp/ConsoleApp.csproj --no-restore'
             }
         }
 
         stage('Generate SBOM') {
             steps {
-                bat 'cyclonedx dotnet -p DemoApp/DemoApp.csproj -o sbom.json'
+                bat 'cyclonedx dotnet -p ConsoleApp/ConsoleApp.csproj -o sbom.json'
             }
         }
 
