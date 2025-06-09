@@ -12,7 +12,7 @@ pipeline {
 
     environment {
         // IMPORTANT: Update this path to the location of your cyclonedx-cli.jar file.
-        CYCLONEDX_CLI_PATH = 'C:\\tools\\cyclonedx-cli-2.8.0.jar'
+        CYCLONEDX_CLI_PATH = "C:\\Users\\HP User\\.dotnet\\tools\\dotnet-CycloneDX.exe"
 
         // Define the name for the generated SBOM file.
         SBOM_NAME = 'sbom.json'
