@@ -44,24 +44,23 @@ pipeline {
         stage('Sign SBOMs') {
             steps {
                 echo "Signing JSON SBOM with JWS..."
-                // The 'sign' command embeds the signature directly into the BOM file.
-                bat "\"${env.CYCLONEDX_CLI_PATH}\" sign --key \"${env.PRIVATE_KEY_PATH}\" --input-file \"${env.SBOM_JSON}\" --output-file \"${env.SBOM_JSON}\""
+                // **FIX**: Added the 'bom' subcommand and changed '--key' to '--key-file'.
+                bat "\"${env.CYCLONEDX_CLI_PATH}\" sign bom \"${env.SBOM_JSON}\" --key-file \"${env.PRIVATE_KEY_PATH}\" --output-file \"${env.SBOM_JSON}\""
 
                 echo "Signing XML SBOM with XMLDSig..."
-                bat "\"${env.CYCLONEDX_CLI_PATH}\" sign --key \"${env.PRIVATE_KEY_PATH}\" --input-file \"${env.SBOM_XML}\" --output-file \"${env.SBOM_XML}\""
+                bat "\"${env.CYCLONEDX_CLI_PATH}\" sign bom \"${env.SBOM_XML}\" --key-file \"${env.PRIVATE_KEY_PATH}\" --output-file \"${env.SBOM_XML}\""
             }
         }
 
         stage('Verify and Validate SBOMs') {
             steps {
                 echo "Verifying and validating JSON SBOM..."
-                // The 'verify' command checks the signature against the public key.
-                bat "\"${env.CYCLONEDX_CLI_PATH}\" verify --key \"${env.PUBLIC_KEY_PATH}\" --input-file \"${env.SBOM_JSON}\""
-                // The 'validate' command checks the file against the CycloneDX schema.
+                // **FIX**: Added the 'bom' subcommand and changed '--key' to '--key-file'.
+                bat "\"${env.CYCLONEDX_CLI_PATH}\" verify bom \"${env.SBOM_JSON}\" --key-file \"${env.PUBLIC_KEY_PATH}\""
                 bat "\"${env.CYCLONEDX_CLI_PATH}\" validate --input-file \"${env.SBOM_JSON}\""
 
                 echo "Verifying and validating XML SBOM..."
-                bat "\"${env.CYCLONEDX_CLI_PATH}\" verify --key \"${env.PUBLIC_KEY_PATH}\" --input-file \"${env.SBOM_XML}\""
+                bat "\"${env.CYCLONEDX_CLI_PATH}\" verify bom \"${env.SBOM_XML}\" --key-file \"${env.PUBLIC_KEY_PATH}\""
                 bat "\"${env.CYCLONEDX_CLI_PATH}\" validate --input-file \"${env.SBOM_XML}\""
             }
         }
