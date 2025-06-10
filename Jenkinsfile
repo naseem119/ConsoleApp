@@ -1,8 +1,8 @@
 /**
  * Jenkinsfile for generating, signing, and validating CycloneDX SBOMs for a .NET project.
  *
- * This pipeline generates SBOMs in both XML and JSON formats, signs them using a private key,
- * and verifies the signatures using the corresponding public key.
+ * This pipeline generates SBOMs in both XML and JSON formats. It signs and verifies the XML
+ * file, as the current version of the cyclonedx-cli tool only supports signing XML files.
  */
 pipeline {
     agent any
@@ -33,7 +33,6 @@ pipeline {
         stage('Generate SBOMs (JSON and XML)') {
             steps {
                 echo "Generating CycloneDX JSON SBOM: ${env.SBOM_JSON}"
-                // The '-fn' flag sets the output filename directly, which is cleaner than renaming.
                 bat "\"${env.CYCLONEDX_TOOL_PATH}\" ConsoleApp/ConsoleApp.csproj -o . --json -fn \"${env.SBOM_JSON}\""
 
                 echo "Generating CycloneDX XML SBOM: ${env.SBOM_XML}"
@@ -41,24 +40,20 @@ pipeline {
             }
         }
 
-        stage('Sign SBOMs') {
+        stage('Sign XML SBOM') {
             steps {
-                echo "Signing JSON SBOM with JWS..."
-                // **FIX**: Removed the '--output-file' argument as the signing is done in-place.
-                bat "\"${env.CYCLONEDX_CLI_PATH}\" sign bom \"${env.SBOM_JSON}\" --key-file \"${env.PRIVATE_KEY_PATH}\""
-
                 echo "Signing XML SBOM with XMLDSig..."
+                // NOTE: The CLI tool currently only supports signing XML files.
                 bat "\"${env.CYCLONEDX_CLI_PATH}\" sign bom \"${env.SBOM_XML}\" --key-file \"${env.PRIVATE_KEY_PATH}\""
             }
         }
 
         stage('Verify and Validate SBOMs') {
             steps {
-                echo "Verifying and validating JSON SBOM..."
-                bat "\"${env.CYCLONEDX_CLI_PATH}\" verify bom \"${env.SBOM_JSON}\" --key-file \"${env.PUBLIC_KEY_PATH}\""
+                echo "Validating JSON SBOM (unsigned)..."
                 bat "\"${env.CYCLONEDX_CLI_PATH}\" validate --input-file \"${env.SBOM_JSON}\""
 
-                echo "Verifying and validating XML SBOM..."
+                echo "Verifying and validating XML SBOM (signed)..."
                 bat "\"${env.CYCLONEDX_CLI_PATH}\" verify bom \"${env.SBOM_XML}\" --key-file \"${env.PUBLIC_KEY_PATH}\""
                 bat "\"${env.CYCLONEDX_CLI_PATH}\" validate --input-file \"${env.SBOM_XML}\""
             }
