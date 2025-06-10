@@ -44,18 +44,17 @@ pipeline {
         stage('Sign SBOMs') {
             steps {
                 echo "Signing JSON SBOM with JWS..."
-                // **FIX**: Added the 'bom' subcommand and changed '--key' to '--key-file'.
-                bat "\"${env.CYCLONEDX_CLI_PATH}\" sign bom \"${env.SBOM_JSON}\" --key-file \"${env.PRIVATE_KEY_PATH}\" --output-file \"${env.SBOM_JSON}\""
+                // **FIX**: Removed the '--output-file' argument as the signing is done in-place.
+                bat "\"${env.CYCLONEDX_CLI_PATH}\" sign bom \"${env.SBOM_JSON}\" --key-file \"${env.PRIVATE_KEY_PATH}\""
 
                 echo "Signing XML SBOM with XMLDSig..."
-                bat "\"${env.CYCLONEDX_CLI_PATH}\" sign bom \"${env.SBOM_XML}\" --key-file \"${env.PRIVATE_KEY_PATH}\" --output-file \"${env.SBOM_XML}\""
+                bat "\"${env.CYCLONEDX_CLI_PATH}\" sign bom \"${env.SBOM_XML}\" --key-file \"${env.PRIVATE_KEY_PATH}\""
             }
         }
 
         stage('Verify and Validate SBOMs') {
             steps {
                 echo "Verifying and validating JSON SBOM..."
-                // **FIX**: Added the 'bom' subcommand and changed '--key' to '--key-file'.
                 bat "\"${env.CYCLONEDX_CLI_PATH}\" verify bom \"${env.SBOM_JSON}\" --key-file \"${env.PUBLIC_KEY_PATH}\""
                 bat "\"${env.CYCLONEDX_CLI_PATH}\" validate --input-file \"${env.SBOM_JSON}\""
 
