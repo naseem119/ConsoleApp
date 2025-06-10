@@ -1,66 +1,76 @@
 /**
- * Jenkinsfile for generating and validating a CycloneDX SBOM for a .NET project.
+ * Jenkinsfile for generating, signing, and validating CycloneDX SBOMs for a .NET project.
  *
- * Prerequisites on the Windows Jenkins agent:
- * 1. .NET SDK (for the 'dotnet' command)
- * 2. CycloneDX .NET Tool (install with: dotnet tool install --global CycloneDX)
- * 3. CycloneDX CLI executable downloaded and placed in a known location.
+ * This pipeline generates SBOMs in both XML and JSON formats, signs them using a private key,
+ * and verifies the signatures using the corresponding public key.
  */
 pipeline {
     agent any
 
     environment {
-        // **UPDATED**: This now points to the downloaded .exe validator tool.
-        // Ensure you have downloaded 'cyclonedx-win-x64.exe' and renamed it to 'cyclonedx-cli.exe' in this location.
+        // --- Paths to validation and generator tools ---
         CYCLONEDX_CLI_PATH = 'C:\\tools\\cyclonedx-win-x64.exe'
-
-        // Define the name for the generated SBOM file.
-        SBOM_NAME = 'sbom.json'
-
-        // **CRITICAL FIX**: Defines the full path to the dotnet-cyclonedx generator tool.
-        // Replace this with the actual path from running 'where dotnet-cyclonedx' in your terminal.
         CYCLONEDX_TOOL_PATH = 'C:\\Users\\HP User\\.dotnet\\tools\\dotnet-cyclonedx.exe'
+
+        // --- Paths to your signing keys ---
+        // IMPORTANT: Update these paths to where you stored your generated keys.
+        PRIVATE_KEY_PATH = 'C:\\tools\\keys\\private.key'
+        PUBLIC_KEY_PATH = 'C:\\tools\\keys\\public.key'
+
+        // --- SBOM Filenames ---
+        SBOM_JSON = 'sbom.json'
+        SBOM_XML = 'sbom.xml'
     }
 
     stages {
         stage('Build Project') {
             steps {
-                echo 'Building the .NET project to ensure it is valid...'
-                // Explicitly target the project file inside the ConsoleApp directory.
+                echo 'Building the .NET project...'
                 bat 'dotnet build ConsoleApp/ConsoleApp.csproj'
             }
         }
 
-        stage('Generate CycloneDX SBOM') {
+        stage('Generate SBOMs (JSON and XML)') {
             steps {
-                echo "Generating CycloneDX SBOM (${env.SBOM_NAME})..."
-                
-                // Call the generator tool using its full, absolute path.
-                bat "\"${env.CYCLONEDX_TOOL_PATH}\" ConsoleApp/ConsoleApp.csproj -o . --json"
+                echo "Generating CycloneDX JSON SBOM: ${env.SBOM_JSON}"
+                // The '-fn' flag sets the output filename directly, which is cleaner than renaming.
+                bat "\"${env.CYCLONEDX_TOOL_PATH}\" ConsoleApp/ConsoleApp.csproj -o . --json -fn \"${env.SBOM_JSON}\""
 
-                // **FIX**: Clean up old SBOM before renaming to prevent conflicts.
-                bat "if exist ${env.SBOM_NAME} ( del ${env.SBOM_NAME} )"
-
-                // Rename the default output 'bom.json' to our desired name.
-                bat "if exist bom.json ( ren bom.json ${env.SBOM_NAME} )"
+                echo "Generating CycloneDX XML SBOM: ${env.SBOM_XML}"
+                bat "\"${env.CYCLONEDX_TOOL_PATH}\" ConsoleApp/ConsoleApp.csproj -o . -fn \"${env.SBOM_XML}\""
             }
         }
 
-        stage('Validate SBOM') {
+        stage('Sign SBOMs') {
             steps {
-                echo "Validating the generated SBOM: ${env.SBOM_NAME}"
-                
-                // **FIX**: The command now calls the validator executable directly, instead of using 'java -jar'.
-                bat "\"${env.CYCLONEDX_CLI_PATH}\" validate --input-file \"${env.SBOM_NAME}\""
+                echo "Signing JSON SBOM with JWS..."
+                // The 'sign' command embeds the signature directly into the BOM file.
+                bat "\"${env.CYCLONEDX_CLI_PATH}\" sign --key \"${env.PRIVATE_KEY_PATH}\" --input-file \"${env.SBOM_JSON}\" --output-file \"${env.SBOM_JSON}\""
+
+                echo "Signing XML SBOM with XMLDSig..."
+                bat "\"${env.CYCLONEDX_CLI_PATH}\" sign --key \"${env.PRIVATE_KEY_PATH}\" --input-file \"${env.SBOM_XML}\" --output-file \"${env.SBOM_XML}\""
+            }
+        }
+
+        stage('Verify and Validate SBOMs') {
+            steps {
+                echo "Verifying and validating JSON SBOM..."
+                // The 'verify' command checks the signature against the public key.
+                bat "\"${env.CYCLONEDX_CLI_PATH}\" verify --key \"${env.PUBLIC_KEY_PATH}\" --input-file \"${env.SBOM_JSON}\""
+                // The 'validate' command checks the file against the CycloneDX schema.
+                bat "\"${env.CYCLONEDX_CLI_PATH}\" validate --input-file \"${env.SBOM_JSON}\""
+
+                echo "Verifying and validating XML SBOM..."
+                bat "\"${env.CYCLONEDX_CLI_PATH}\" verify --key \"${env.PUBLIC_KEY_PATH}\" --input-file \"${env.SBOM_XML}\""
+                bat "\"${env.CYCLONEDX_CLI_PATH}\" validate --input-file \"${env.SBOM_XML}\""
             }
         }
     }
     post {
         always {
-            // This block runs after all stages, regardless of success or failure.
-            echo 'Pipeline finished. Archiving SBOM...'
-            // Archive the generated SBOM so it can be downloaded from the Jenkins job UI.
-            archiveArtifacts artifacts: "${env.SBOM_NAME}", allowEmptyArchive: true
+            echo 'Pipeline finished. Archiving SBOMs...'
+            // Archive both generated SBOMs so they can be downloaded from the Jenkins job UI.
+            archiveArtifacts artifacts: "${env.SBOM_JSON}, ${env.SBOM_XML}", allowEmptyArchive: true
         }
     }
 }
