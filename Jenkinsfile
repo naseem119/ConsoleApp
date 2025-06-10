@@ -54,7 +54,8 @@ pipeline {
                 bat "\"${env.CYCLONEDX_CLI_PATH}\" validate --input-file \"${env.SBOM_JSON}\""
 
                 echo "Verifying and validating XML SBOM (signed)..."
-                bat "\"${env.CYCLONEDX_CLI_PATH}\" verify bom \"${env.SBOM_XML}\" --key-file \"${env.PUBLIC_KEY_PATH}\""
+                // **FIX**: The 'verify' command uses the 'all' subcommand, not 'bom'.
+                bat "\"${env.CYCLONEDX_CLI_PATH}\" verify all \"${env.SBOM_XML}\" --key-file \"${env.PUBLIC_KEY_PATH}\""
                 bat "\"${env.CYCLONEDX_CLI_PATH}\" validate --input-file \"${env.SBOM_XML}\""
             }
         }
